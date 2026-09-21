@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "989674409097",
+    "project_id": "ride-way-app",
+    "storage_bucket": "ride-way-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989674409097:android:485d63b2b30a2f4e390a58",
+        "android_client_info": {
+          "package_name": "com.example.ride_way_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989674409097-eb49mkpckeqii1hib06de5agttkod2b7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw1BqMRcg1capWb7pdyb25mU6X0sssAPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989674409097-eb49mkpckeqii1hib06de5agttkod2b7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "989674409097-apmj2m7nanl8756htdcuvn2e455p5i90.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rideWayApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989674409097:android:b4354de7342e0e75390a58",
+        "android_client_info": {
+          "package_name": "com.example.testapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989674409097-eb49mkpckeqii1hib06de5agttkod2b7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw1BqMRcg1capWb7pdyb25mU6X0sssAPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989674409097-eb49mkpckeqii1hib06de5agttkod2b7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "989674409097-apmj2m7nanl8756htdcuvn2e455p5i90.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rideWayApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
