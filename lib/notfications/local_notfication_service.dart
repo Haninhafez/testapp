@@ -1,26 +1,34 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-void notificationTapBackground(NotificationResponse details) {
-  // Handle notification tap in background
-}
-
 class LocalNotficationService {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+   static StreamController<NotificationResponse> streamController =
+      StreamController();
+
+  static void onTap(NotificationResponse details) {
+    log(details.id!.toString());
+    log(details.payload!.toString());
+    streamController.add(details);
+
+  }
 
   static Future init() async {
     InitializationSettings settings = InitializationSettings(
       android: AndroidInitializationSettings("@mipmap/ic_launcher"),
       iOS: DarwinInitializationSettings(),
     );
+
     await flutterLocalNotificationsPlugin.initialize(
       settings: settings,
-      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
-      onDidReceiveNotificationResponse: (details) {},
+      onDidReceiveBackgroundNotificationResponse: onTap,
+      onDidReceiveNotificationResponse: onTap,
     );
   }
 
