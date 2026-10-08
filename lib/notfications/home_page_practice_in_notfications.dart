@@ -8,6 +8,7 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:testapp/app_router.dart';
 import 'package:testapp/notfications/email_sms_notfication.dart';
 import 'package:testapp/notfications/new.dart';
 import 'in_app_notification.dart';
@@ -22,13 +23,17 @@ class HomePage extends StatelessWidget {
       // ListView عشان الأزرار تتعمل Scroll لو الشاشة صغيرة
       body: ListView(
         padding: const EdgeInsets.all(16),
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         children: [
           // ---- 1) Local Notification ----
           FilledButton(
             onPressed: () => showLocalNotification(
               title: 'تذكير',
               body: 'الاجتماع بعد 10 دقائق',
-               payload: jsonEncode({'screen': 'chat'}),  // بيرجع لما تضغط على الإشعار
+              payload: jsonEncode({
+                'screen': 'chat',
+              }), // بيرجع لما تضغط على الإشعار
             ),
             child: const Text('Local Notification'),
           ),
@@ -75,7 +80,9 @@ class HomePage extends StatelessWidget {
                 subject: 'أهلاً بك',
                 text: 'تم إنشاء حسابك',
               );
-              showInAppSnackBar(ok ? 'تم طلب الإيميل' : 'فشل، تأكد من الـ Server');
+              showInAppSnackBar(
+                ok ? 'تم طلب الإيميل' : 'فشل، تأكد من الـ Server',
+              );
             },
             child: const Text('Email (عن طريق Server)'),
           ),
@@ -88,9 +95,35 @@ class HomePage extends StatelessWidget {
                 to: '+201000000000',
                 body: 'رمز التحقق: 4821',
               );
-              showInAppSnackBar(ok ? 'تم طلب الـ SMS' : 'فشل، تأكد من الـ Server');
+              showInAppSnackBar(
+                ok ? 'تم طلب الـ SMS' : 'فشل، تأكد من الـ Server',
+              );
             },
             child: const Text('SMS (عن طريق Server)'),
+          ),
+          const SizedBox(height: 12),
+
+          FilledButton(
+            onPressed: () async {
+              router.push('/map');
+            },
+            child: const Text('Map'),
+          ),
+          const SizedBox(height: 12),
+
+          FilledButton(
+            onPressed: () async {
+              router.push('/google_map');
+            },
+            child: const Text('Google Map'),
+          ),
+          const SizedBox(height: 12),
+
+          FilledButton(
+            onPressed: () async {
+              router.push('/payment_page');
+            },
+            child: const Text('Payment Page'),
           ),
         ],
       ),
