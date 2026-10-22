@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:testapp/app_router.dart';
 import 'package:testapp/firebase_options.dart';
 import 'package:testapp/notfications/in_app_notification.dart';
@@ -11,19 +12,32 @@ import 'package:testapp/notfications/local_notfication_service.dart';
 import 'package:testapp/notfications/new.dart';
 import 'package:testapp/notfications/notfication_detealisl.dart';
 import 'package:testapp/notfications/push_notifications.dart';
+import 'package:testapp/performance_profiling/rebuild_optimization.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
+  final sw = Stopwatch()..start();
   WidgetsFlutterBinding.ensureInitialized();
   await LocalNotficationService.init();
+  log('Local Notification init: ${sw.elapsedMilliseconds} ms');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  log('Firebase init: ${sw.elapsedMilliseconds} ms');
   FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
+  log('Firebase onBackgroundMessage: ${sw.elapsedMilliseconds} ms');
   await LocalNotficationService.requestPermission();
+  log('Local Notification requestPermission: ${sw.elapsedMilliseconds} ms');
   await initPushNotifications();
+  log('Push Notification init: ${sw.elapsedMilliseconds} ms');
   await initLocalNotifications();
-
-  runApp(const MyApp());
+  log('Local Notification init: ${sw.elapsedMilliseconds} ms');
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => PriceNotifier(),
+      child: const MyApp(),
+    ),
+  );
+  log('App init: ${sw.elapsedMilliseconds} ms');
 }
 
 class MyApp extends StatefulWidget {
@@ -69,7 +83,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       debugShowCheckedModeBanner: false,
       routerConfig: router,
       scaffoldMessengerKey: messengerKey,
-     
     );
   }
 }

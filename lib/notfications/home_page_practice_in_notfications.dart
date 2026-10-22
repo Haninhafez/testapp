@@ -19,114 +19,156 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Notifications Demo')),
+      // appBar: AppBar(title: const Text('Notifications Demo')),
       // ListView عشان الأزرار تتعمل Scroll لو الشاشة صغيرة
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        children: [
-          // ---- 1) Local Notification ----
-          FilledButton(
-            onPressed: () => showLocalNotification(
-              title: 'تذكير',
-              body: 'الاجتماع بعد 10 دقائق',
-              payload: jsonEncode({
-                'screen': 'chat',
-              }), // بيرجع لما تضغط على الإشعار
-            ),
-            child: const Text('Local Notification'),
-          ),
-          const SizedBox(height: 12),
-
-          // ---- 2) In-App: SnackBar ----
-          FilledButton(
-            onPressed: () => showInAppSnackBar('تم حفظ التغييرات ✅'),
-            child: const Text('In-App: SnackBar'),
-          ),
-          const SizedBox(height: 12),
-
-          // ---- 3) In-App: Alert ----
-          FilledButton(
-            onPressed: () async {
-              // await عشان نستنى اختيار المستخدم (موافق / إلغاء)
-              final confirmed = await showInAppAlert(
-                context,
-                title: 'تنبيه',
-                content: 'هل تريد الحذف؟',
-              );
-              showInAppSnackBar(confirmed ? 'تم الحذف' : 'تم الإلغاء');
-            },
-            child: const Text('In-App: Alert'),
-          ),
-          const SizedBox(height: 12),
-
-          // ---- 4) Push: نجيب الـ Token عشان نجرّب من Firebase Console ----
-          FilledButton(
-            onPressed: () async {
-              final token = await FirebaseMessaging.instance.getToken();
-              debugPrint('FCM Token: $token'); // انسخه من الـ Console
-              showInAppSnackBar('الـ Token اتطبع في الـ Console');
-            },
-            child: const Text('Push: اطبع الـ Token'),
-          ),
-          const SizedBox(height: 12),
-
-          // ---- 5) Email (عن طريق Server) ----
-          FilledButton(
-            onPressed: () async {
-              final ok = await requestEmailFromServer(
-                to: 'user@example.com',
-                subject: 'أهلاً بك',
-                text: 'تم إنشاء حسابك',
-              );
-              showInAppSnackBar(
-                ok ? 'تم طلب الإيميل' : 'فشل، تأكد من الـ Server',
-              );
-            },
-            child: const Text('Email (عن طريق Server)'),
-          ),
-          const SizedBox(height: 12),
-
-          // ---- 6) SMS (عن طريق Server) ----
-          FilledButton(
-            onPressed: () async {
-              final ok = await requestSmsFromServer(
-                to: '+201000000000',
-                body: 'رمز التحقق: 4821',
-              );
-              showInAppSnackBar(
-                ok ? 'تم طلب الـ SMS' : 'فشل، تأكد من الـ Server',
-              );
-            },
-            child: const Text('SMS (عن طريق Server)'),
-          ),
-          const SizedBox(height: 12),
-
-          FilledButton(
-            onPressed: () async {
-              router.push('/map');
-            },
-            child: const Text('Map'),
-          ),
-          const SizedBox(height: 12),
-
-          FilledButton(
-            onPressed: () async {
-              router.push('/google_map');
-            },
-            child: const Text('Google Map'),
-          ),
-          const SizedBox(height: 12),
-
-          FilledButton(
-            onPressed: () async {
-              router.push('/payment_page');
-            },
-            child: const Text('Payment Page'),
-          ),
-        ],
+      body: Center(
+        child: FilledButton(
+          onPressed: () async {
+            router.push('/paymob');
+          },
+          child: const Text('Paymob'),
+        ),
       ),
+
+      //    ListView(
+      //     padding: const EdgeInsets.all(16),
+      //     physics: NeverScrollableScrollPhysics(),
+      //     shrinkWrap: true,
+      //     children: [
+      //       // // ---- 1) Local Notification ----
+      //       // FilledButton(
+      //       //   onPressed: () => showLocalNotification(
+      //       //     title: 'تذكير',
+      //       //     body: 'الاجتماع بعد 10 دقائق',
+      //       //     payload: jsonEncode({
+      //       //       'screen': 'chat',
+      //       //     }), // بيرجع لما تضغط على الإشعار
+      //       //   ),
+      //       //   child: const Text('Local Notification'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // // ---- 2) In-App: SnackBar ----
+      //       // FilledButton(
+      //       //   onPressed: () => showInAppSnackBar('تم حفظ التغييرات ✅'),
+      //       //   child: const Text('In-App: SnackBar'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // // ---- 3) In-App: Alert ----
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     // await عشان نستنى اختيار المستخدم (موافق / إلغاء)
+      //       //     final confirmed = await showInAppAlert(
+      //       //       context,
+      //       //       title: 'تنبيه',
+      //       //       content: 'هل تريد الحذف؟',
+      //       //     );
+      //       //     showInAppSnackBar(confirmed ? 'تم الحذف' : 'تم الإلغاء');
+      //       //   },
+      //       //   child: const Text('In-App: Alert'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // // ---- 4) Push: نجيب الـ Token عشان نجرّب من Firebase Console ----
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     final token = await FirebaseMessaging.instance.getToken();
+      //       //     debugPrint('FCM Token: $token'); // انسخه من الـ Console
+      //       //     showInAppSnackBar('الـ Token اتطبع في الـ Console');
+      //       //   },
+      //       //   child: const Text('Push: اطبع الـ Token'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // // ---- 5) Email (عن طريق Server) ----
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     final ok = await requestEmailFromServer(
+      //       //       to: 'user@example.com',
+      //       //       subject: 'أهلاً بك',
+      //       //       text: 'تم إنشاء حسابك',
+      //       //     );
+      //       //     showInAppSnackBar(
+      //       //       ok ? 'تم طلب الإيميل' : 'فشل، تأكد من الـ Server',
+      //       //     );
+      //       //   },
+      //       //   child: const Text('Email (عن طريق Server)'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // // ---- 6) SMS (عن طريق Server) ----
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     final ok = await requestSmsFromServer(
+      //       //       to: '+201000000000',
+      //       //       body: 'رمز التحقق: 4821',
+      //       //     );
+      //       //     showInAppSnackBar(
+      //       //       ok ? 'تم طلب الـ SMS' : 'فشل، تأكد من الـ Server',
+      //       //     );
+      //       //   },
+      //       //   child: const Text('SMS (عن طريق Server)'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     router.push('/map');
+      //       //   },
+      //       //   child: const Text('Map'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     router.push('/google_map');
+      //       //   },
+      //       //   child: const Text('Google Map'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     router.push('/payment_page');
+      //       //   },
+      //       //   child: const Text('Payment Page'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     router.push('/performance_test');
+      //       //   },
+      //       //   child: const Text('Performance Test'),
+      //       // ),
+
+      //       // const SizedBox(height: 12),
+
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     router.push('/rebuild_optimization');
+      //       //   },
+      //       //   child: const Text('Rebuild Optimization'),
+      //       // ),
+      //       // const SizedBox(height: 12),
+
+      //       // FilledButton(
+      //       //   onPressed: () async {
+      //       //     router.push('/IsolateComputePage');
+      //       //   },
+      //       //   child: const Text('Isolate Compute Page'),
+      //       // ),
+      //       const SizedBox(height: 12),
+
+      //       FilledButton(
+      //         onPressed: () async {
+      //           router.push('/ImageOptimizationPage');
+      //         },
+      //         child: const Text('Image Optimization Page'),
+      //       ),
+      //     ],
+      //   ),
     );
   }
 }
