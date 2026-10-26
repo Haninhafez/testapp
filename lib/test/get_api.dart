@@ -4,7 +4,7 @@ import 'package:http/http.dart' as htttp;
 
 Future<Map<String, dynamic>> getApi(htttp.Client client) async {
   final response = await client.get(
-    Uri.parse('https://jsonplaceholder.typicode.com/todos/2'),
+    Uri.parse('https://jsonplaceholder.typicode.com/todos/1'),
   );
 
   if (response.statusCode == 200) {
