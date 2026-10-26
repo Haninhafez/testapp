@@ -1,4 +1,3 @@
-```yaml
 name: Flutter CI
 
 on:
@@ -26,9 +25,11 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.7.12'
           channel: stable
           cache: true
+
+      - name: Show Flutter version
+        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -48,4 +49,3 @@ jobs:
           name: flutter-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
-```
