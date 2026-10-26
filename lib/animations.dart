@@ -9,6 +9,7 @@ class CourseDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Course Details')),
       body: Column(
+        
         children: [
           Hero(
             curve: Curves.easeInExpo,
