@@ -1,3 +1,4 @@
+
 name: Flutter CI
 
 on:
@@ -24,6 +25,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -46,18 +53,24 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: flutter-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
 
-      - name: Upload artifact to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
-        with:
-          appId: ${{ secrets.APP_ID }}
-          serviceCredentialsFileContent: ${{ secrets.GOOGLE_APPLICATION_CREDENTIAL }}
-          groups: testers
-          file: build/app/outputs/flutter-apk/app-release.apk
-          releaseNotes: "Automated release from GitHub Actions"
+      - name: Prepare Firebase credentials
+        if: github.event_name == 'push'
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIAL }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-service-account.json
+        run: |
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > "$GOOGLE_APPLICATION_CREDENTIALS"
+
+      - name: Deploy with Fastlane
+        if: github.event_name == 'push'
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-service-account.json
+        run: bundle exec fastlane android beta

@@ -1,0 +1,18 @@
+
+default_platform(:android)
+
+platform :android do
+  desc "Distribute APK to Firebase testers"
+
+  lane :beta do
+    firebase_app_distribution(
+      app: ENV.fetch("APP_ID"),
+      service_credentials_file:
+        ENV.fetch("GOOGLE_APPLICATION_CREDENTIALS"),
+      android_artifact_path:
+        "build/app/outputs/flutter-apk/app-release.apk",
+      groups: "testers",
+      release_notes: "Automated release from GitHub Actions"
+    )
+  end
+end
